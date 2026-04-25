@@ -17,14 +17,16 @@ mongoose.connect(process.env.MONGO_URI)
 const app = express()
 
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",
+    "https://vanashree-frontend.onrender.com" 
+  ],
   credentials: true
 }))
-
 app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 
-// serve uploaded photos as static files
+
 app.use("/uploads", express.static(path.join(__dirname, "uploads")))
 
 app.use(session({
