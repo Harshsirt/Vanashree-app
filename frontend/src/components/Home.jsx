@@ -49,24 +49,31 @@ export default function Home({ user, goTo, openTree }) {
     return matchSearch && matchHealth
   })
 
-  async function toggleLike(treeId) {
-    if (!user) {
-      setGuestWarning(true)
-      setTimeout(() => setGuestWarning(false), 3000)
-      return
-    }
-    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${treeId}/like`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userId: user._id })
-    })
-    const data = await res.json()
-    setTreeList(prev => prev.map(tree =>
-      tree._id === treeId
-        ? { ...tree, likes: data.msg === "Liked" ? [...(tree.likes || []), user._id] : (tree.likes || []).filter(id => id !== user._id) }
-        : tree
-    ))
+ async function toggleLike(treeId) {
+  if (!user || user.isGuest) {
+    goTo("register")   
+    return
   }
+
+  const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${treeId}/like`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userId: user._id })
+  })
+
+  const data = await res.json()
+
+  setTreeList(prev => prev.map(tree =>
+    tree._id === treeId
+      ? {
+          ...tree,
+          likes: data.msg === "Liked"
+            ? [...(tree.likes || []), user._id]
+            : (tree.likes || []).filter(id => id !== user._id)
+        }
+      : tree
+  ))
+}
 
   function isLiked(tree) {
     if (!user) return false
@@ -115,11 +122,17 @@ export default function Home({ user, goTo, openTree }) {
             </p>
             <div className="flex gap-3 flex-wrap">
               <button
-                onClick={() => goTo(user ? "add" : "register")}
-                className="bg-green-400 text-green-900 px-5 py-2.5 rounded-lg text-sm font-semibold border-none cursor-pointer"
-              >
-                {user ? " Plant a Tree" : "Start Planting"}
-              </button>
+  onClick={() => {
+    if (!user || user.isGuest) {
+      goTo("register")
+    } else {
+      goTo("add")
+    }
+  }}
+  className="bg-green-400 text-green-900 px-5 py-2.5 rounded-lg text-sm font-semibold border-none cursor-pointer"
+>
+  {user && !user.isGuest ? "Plant a Tree" : "Start Planting"}
+</button>
               <button
                 onClick={() => goTo("trees")}
                 className="border border-white text-white px-5 py-2.5 rounded-lg text-sm cursor-pointer bg-transparent"

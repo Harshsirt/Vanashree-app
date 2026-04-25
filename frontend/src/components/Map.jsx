@@ -39,12 +39,12 @@ export default function MapPage({ goTo }) {
     fetch(`${import.meta.env.VITE_API_URL}/api/posts?limit=100&page=1`)
       .then(res => res.json())
       .then(data => {
-        const allPosts = data.posts || []
-        const treesWithGps = allPosts.filter(tree => tree.lat && tree.lng)
-        setTrees(treesWithGps)
-        setLoading(false)
+        const allPosts = data.posts || [] ;
+       const treesWithGps = allPosts.filter( tree => tree.lat != null && tree.lng != null);
+        setTrees(treesWithGps);
+        setLoading(false);
       })
-      .catch(() => setLoading(false))
+      .catch(() => setLoading(false));
   }, [])
 
   return (
