@@ -15,6 +15,26 @@ export default function MapPage({ goTo }) {
   const [trees, setTrees] = useState([])
   const [loading, setLoading] = useState(true)
 
+
+  const gettreecolor = (health) => {
+  const h = (health || "").toLowerCase()
+
+  let color = "green"
+  if (h.includes("care")) color = "orange"
+  if (h.includes("danger")) color = "red"
+
+  return L.divIcon({
+    html: `<div style="
+      font-size: 28px;
+      color: ${color};
+      text-shadow: 0 0 3px rgba(0,0,0,0.5);
+    ">🌳</div>`,
+    className: "",
+    iconSize: [30, 30],
+    iconAnchor: [15, 30]
+  })
+}
+
   useEffect(() => {
     fetch(`${import.meta.env.VITE_API_URL}/api/posts?limit=100&page=1`)
       .then(res => res.json())
@@ -58,7 +78,7 @@ export default function MapPage({ goTo }) {
           <MapContainer center={[18.5204, 73.8567]} zoom={7} style={{ height: "100%", width: "100%" }}>
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="© OpenStreetMap" />
             {trees.map(tree => (
-              <Marker key={tree._id} position={[tree.lat, tree.lng]}>
+              <Marker key={tree._id} position={[tree.lat, tree.lng]} icon={gettreecolor(tree.health)}>
                 <Popup>
                   <div>
                     <p className="font-semibold text-sm">{tree.title}</p>
