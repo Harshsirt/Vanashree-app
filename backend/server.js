@@ -8,6 +8,7 @@ const path = require("path")
 const fs = require("fs")
 const User = require("./views/user.js")
 
+
 if (!fs.existsSync("uploads")) fs.mkdirSync("uploads")
 
 mongoose.set("strictQuery", true)
@@ -43,6 +44,8 @@ const routes = require("./routes/index.js")
 
 app.use("/api", routes)
 
-app.listen(process.env.PORT, () => {
-  console.log("Server running on port", process.env.PORT)
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT)
 })
