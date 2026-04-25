@@ -17,7 +17,8 @@ export default function App() {
   const [user, setUser] = useState(null)
   const [selectedTreeId, setSelectedTreeId] = useState(null)
 
-  // load user from localStorage when app starts
+
+ 
   useEffect(() => {
     const savedUser = localStorage.getItem("vanashree_user")
     if (savedUser) {
@@ -25,12 +26,17 @@ export default function App() {
     }
   }, [])
 
-  function goTo(pageName) {
-    setPage(pageName)
-    window.scrollTo(0, 0)
+function goTo(pageName) {
+  if (pageName.startsWith("tree_")) {
+    const treeId = pageName.replace("tree_", "")
+    openTree(treeId)
+    return
   }
+  setPage(pageName)
+  window.scrollTo(0, 0)
+}
 
-  function openTree(treeId) {
+function openTree(treeId) {
     setSelectedTreeId(treeId)
     setPage("tree")
     window.scrollTo(0, 0)

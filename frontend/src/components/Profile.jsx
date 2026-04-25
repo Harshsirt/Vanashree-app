@@ -112,12 +112,10 @@ export default function Profile({ user, goTo, logout }) {
                 <p className="text-sm font-medium text-gray-900 truncate">{tree.title}</p>
                 <p className="text-xs text-gray-400 italic mt-0.5">{tree.species}</p>
                 <div className="mt-2 mb-2">{getHealthBadge(tree.health)}</div>
-                <button
-                  onClick={() => goTo("tree_" + tree._id)}
-                  className="text-xs text-green-700 bg-transparent border border-green-200 px-2 py-1 rounded-lg cursor-pointer w-full"
-                >
-                  Post Update
-                </button>
+               <button onClick={() => goTo("tree_" + tree._id)} className="text-xs text-green-700
+                bg-transparent border border-green-200 px-2 py-1 rounded-lg cursor-pointer w-full">
+                 Post Update
+              </button>
               </div>
             </div>
           ))}
