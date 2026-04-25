@@ -29,12 +29,12 @@ export default function Home({ user, goTo, openTree }) {
   const [guestWarning, setGuestWarning] = useState(false)
 
   useEffect(() => {
-    fetch("fetch(`${import.meta.env.VITE_API_URL}/api/posts?limit=8&page=1`)")
+    fetch(`${import.meta.env.VITE_API_URL}/api/posts?limit=8&page=1`)
       .then(res => res.json())
       .then(data => setTreeList(data.posts || []))
       .catch(() => {})
 
-    fetch("fetch(`${import.meta.env.VITE_API_URL}/api/volunteers/count`)")
+    fetch(`${import.meta.env.VITE_API_URL}/api/volunteers/count`)
       .then(res => res.json())
       .then(data => setVolunteers(data.count))
       .catch(() => {})
@@ -55,7 +55,7 @@ export default function Home({ user, goTo, openTree }) {
       setTimeout(() => setGuestWarning(false), 3000)
       return
     }
-    const res = awaitfetch(`${import.meta.env.VITE_API_URL}/api/posts/${treeId}/like`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${treeId}/like`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user._id })

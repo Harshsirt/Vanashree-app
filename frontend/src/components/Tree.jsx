@@ -184,7 +184,7 @@ export default function Tree({ user, goTo, openTree }) {
         </div>
       )}
 
-    //pagination
+    
       {totalPages > 1 && (
         <div className="mt-10">
           <div className="flex justify-center items-center gap-1.5 flex-wrap">
