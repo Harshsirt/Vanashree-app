@@ -2,22 +2,21 @@ import { useState, useEffect } from "react"
 
 export default function TreeDetail({ treeId, goTo, user }) {
 
-  const [tree, setTree] = useState(null)
-  const [liked, setLiked] = useState(false)
-  const [showUpdateForm, setShowUpdateForm] = useState(false)
-  const [caption, setCaption] = useState("")
-  const [updatePhoto, setUpdatePhoto] = useState(null)
-  const [updatePhotoFile, setUpdatePhotoFile] = useState(null)
-  const [isPosting, setIsPosting] = useState(false)
-  const [updateMsg, setUpdateMsg] = useState("")
+  const [tree, setTree] = useState(null);
+  const [liked, setLiked] = useState(false);
+  const [showUpdateForm, setShowUpdateForm] = useState(false);
+  const [caption, setCaption] = useState("");
+  const [updatePhoto, setUpdatePhoto] = useState(null);
+  const [updatePhotoFile, setUpdatePhotoFile] = useState(null);
+  const [isPosting, setIsPosting] = useState(false);
+  const [updateMsg, setUpdateMsg] = useState("");
 
   useEffect(() => {
     loadTree()
   }, [treeId])
 
   function loadTree() {
-    fetch(`http://localhost:3000/api/posts/${treeId}`)
-      .then(res => res.json())
+  fetch(`${import.meta.env.VITE_API_URL}/api/posts/${treeId}`).then(res => res.json())
       .then(data => {
         setTree(data)
         if (user && data.likes) {
@@ -29,7 +28,7 @@ export default function TreeDetail({ treeId, goTo, user }) {
 
   async function toggleLike() {
     if (!user) return alert("Please login to like")
-    const res = await fetch(`http://localhost:3000/api/posts/${treeId}/like`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${treeId}/like`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user._id })
@@ -61,7 +60,7 @@ export default function TreeDetail({ treeId, goTo, user }) {
     formData.append("postedByName", user.name)
     if (updatePhotoFile) formData.append("image", updatePhotoFile, updatePhotoFile.name)
 
-    const res = await fetch(`http://localhost:3000/api/posts/${treeId}/update`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${treeId}/update`, {
       method: "POST",
       body: formData
     })
@@ -113,7 +112,7 @@ export default function TreeDetail({ treeId, goTo, user }) {
           
           <div className="h-56 sm:h-72 bg-green-100 overflow-hidden">
             {tree.image && tree.image !== ""
-              ? <img src={`http://localhost:3000${tree.image}`} className="w-full h-full object-cover" alt={tree.title} />
+              ? <img  src={`${import.meta.env.VITE_API_URL}${tree.image}`}  className="w-full h-full object-cover" alt={tree.title} />
               : <div className="w-full h-full flex items-center justify-center text-6xl">🌱</div>
             }
           </div>
@@ -178,7 +177,7 @@ export default function TreeDetail({ treeId, goTo, user }) {
               </div>
             )}
 
-            {/* Notes */}
+            
             {tree.description && (
               <div className="mt-4">
                 <p className="text-xs text-gray-400 mb-2">Notes</p>
@@ -276,8 +275,7 @@ export default function TreeDetail({ treeId, goTo, user }) {
             {(tree.updates || []).slice().reverse().map((update, i) => (
               <div key={i} className="border border-gray-100 rounded-xl p-4">
                 {update.image && update.image !== "" && (
-                  <img
-                    src={`http://localhost:3000${update.image}`}
+                  <img src={`${import.meta.env.VITE_API_URL}${update.image}`}
                     className="w-full h-44 object-cover rounded-lg mb-3"
                     alt="update"
                   />

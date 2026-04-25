@@ -43,7 +43,7 @@ export default function About() {
         />
       </div>
 
-      {/* FEATURES */}
+      
       <div className="bg-gray-50 py-16 px-4 sm:px-8 lg:px-16">
 
         <h2 className="text-center text-2xl font-semibold mb-10">
@@ -95,9 +95,7 @@ export default function About() {
         <h2 className="text-xl sm:text-2xl font-semibold mb-3">
           Join us in making the planet greener 🌍
         </h2>
-        <button className="bg-green-400 text-green-900 px-6 py-2 rounded-lg">
-          Start Planting
-        </button>
+        
       </div>
 
     </div>

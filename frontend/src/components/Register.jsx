@@ -2,9 +2,7 @@ import { useState } from "react"
 
 export default function Register({ goTo, setUser }) {
 
-  const [step, setStep] = useState(1)
-
-
+  const [step, setStep] = useState(1);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -14,9 +12,9 @@ export default function Register({ goTo, setUser }) {
   const [otp, setOtp] = useState("");
   const [otpVerified, setOtpVerified] = useState(false);
 
-  const [msg, setMsg] = useState("")
-  const [msgType, setMsgType] = useState("error")
-  const [loading, setLoading] = useState(false)
+  const [msg, setMsg] = useState("");
+  const [msgType, setMsgType] = useState("error");
+  const [loading, setLoading] = useState(false);
 
   function pickPhoto(e) {
     const file = e.target.files[0]
@@ -37,7 +35,7 @@ export default function Register({ goTo, setUser }) {
       return
     }
     setLoading(true)
-    const res = await fetch("http://localhost:3000/api/sendotp", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/sendotp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email })
@@ -50,7 +48,7 @@ export default function Register({ goTo, setUser }) {
 
   async function verifyOtp() {
     setLoading(true)
-    const res = await fetch("http://localhost:3000/api/verifyOtp", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/verifyOtp`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, otp })
@@ -78,7 +76,7 @@ export default function Register({ goTo, setUser }) {
     formData.append("password", password)
     if (photoFile) formData.append("photo", photoFile)
 
-    const res = await fetch("http://localhost:3000/api/register", {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/register`, {
       method: "POST",
       body: formData  // no Content-Type header when using FormData
     })

@@ -23,7 +23,7 @@ export default function Navbar({ user, goTo, logout }) {
   }, [user])
 
   function loadNotifications() {
-    fetch("http://localhost:3000/api/updates/recent")
+   fetch(`${import.meta.env.VITE_API_URL}/api/updates/recent`)
       .then(res => res.json())
       .then(data => {
         setNotifications(data)
@@ -134,7 +134,7 @@ export default function Navbar({ user, goTo, logout }) {
             <div onClick={() => goTo("profile")} className="flex items-center gap-2 bg-green-50 border border-green-200 rounded-full pl-1 pr-4 py-1 cursor-pointer">
               <div className="w-7 h-7 bg-green-900 rounded-full flex items-center justify-center text-white text-xs font-semibold overflow-hidden flex-shrink-0">
                 {user.photo && user.photo !== ""
-                  ? <img src={`http://localhost:3000${user.photo}`} className="w-full h-full object-cover" alt="avatar" />
+                  ? <img  src={`${import.meta.env.VITE_API_URL}${user.photo}`} className="w-full h-full object-cover" alt="avatar" />
                   : <span>{user.name ? user.name[0].toUpperCase() : "U"}</span>
                 }
               </div>
@@ -144,7 +144,7 @@ export default function Navbar({ user, goTo, logout }) {
         )}
       </div>
 
-      {/* Mobile hamburger */}
+      
       <button
         onClick={() => setMenuOpen(!menuOpen)}
         className="md:hidden bg-transparent border-none text-gray-700 text-2xl cursor-pointer p-1"
@@ -152,7 +152,6 @@ export default function Navbar({ user, goTo, logout }) {
         {menuOpen ? "✕" : "☰"}
       </button>
 
-      {/* Mobile dropdown */}
       {menuOpen && (
         <div className="md:hidden absolute top-16 left-0 right-0 bg-white border-b border-gray-200 px-4 py-4 flex flex-col gap-2 z-50 shadow-lg">
           {navLinks.map(item => (
@@ -181,7 +180,7 @@ export default function Navbar({ user, goTo, logout }) {
               <div className="flex items-center gap-3 py-2 border-b border-gray-100">
                 <div className="w-8 h-8 bg-green-900 rounded-full flex items-center justify-center text-white text-xs font-semibold overflow-hidden flex-shrink-0">
                   {user.photo && user.photo !== ""
-                    ? <img src={`http://localhost:3000${user.photo}`} className="w-full h-full object-cover" alt="avatar" />
+                    ? <img src={`${import.meta.env.VITE_API_URL}${user.photo}`} className="w-full h-full object-cover" alt="avatar" />
                     : <span>{user.name ? user.name[0].toUpperCase() : "U"}</span>
                   }
                 </div>

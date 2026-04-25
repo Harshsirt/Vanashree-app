@@ -16,7 +16,7 @@ export default function MapPage({ goTo }) {
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/posts?limit=100&page=1")
+    fetch(`${import.meta.env.VITE_API_URL}/api/posts?limit=100&page=1`)
       .then(res => res.json())
       .then(data => {
         const allPosts = data.posts || []
@@ -88,7 +88,7 @@ export default function MapPage({ goTo }) {
               <div key={tree._id} className="bg-white border border-gray-200 rounded-xl p-4 flex gap-3 items-center">
                 <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center overflow-hidden flex-shrink-0">
                   {tree.image && tree.image !== ""
-                    ? <img src={`http://localhost:3000${tree.image}`} className="w-full h-full object-cover" alt={tree.title} />
+                    ? <img src={`${import.meta.env.VITE_API_URL}${tree.image}`} className="w-full h-full object-cover" alt={tree.title} />
                     : <span className="text-xl">🌱</span>
                   }
                 </div>

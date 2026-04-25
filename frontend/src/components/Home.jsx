@@ -29,12 +29,12 @@ export default function Home({ user, goTo, openTree }) {
   const [guestWarning, setGuestWarning] = useState(false)
 
   useEffect(() => {
-    fetch("http://localhost:3000/api/posts?limit=8&page=1")
+    fetch("fetch(`${import.meta.env.VITE_API_URL}/api/posts?limit=8&page=1`)")
       .then(res => res.json())
       .then(data => setTreeList(data.posts || []))
       .catch(() => {})
 
-    fetch("http://localhost:3000/api/volunteers/count")
+    fetch("fetch(`${import.meta.env.VITE_API_URL}/api/volunteers/count`)")
       .then(res => res.json())
       .then(data => setVolunteers(data.count))
       .catch(() => {})
@@ -55,7 +55,7 @@ export default function Home({ user, goTo, openTree }) {
       setTimeout(() => setGuestWarning(false), 3000)
       return
     }
-    const res = await fetch(`http://localhost:3000/api/posts/${treeId}/like`, {
+    const res = awaitfetch(`${import.meta.env.VITE_API_URL}/api/posts/${treeId}/like`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user._id })
@@ -235,7 +235,7 @@ export default function Home({ user, goTo, openTree }) {
             <div key={tree._id} className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-green-300 transition-colors">
               <div className="relative h-40 cursor-pointer" onClick={() => openTree && openTree(tree._id)}>
                 {tree.image && tree.image !== ""
-  ? <img src={`http://localhost:3000${tree.image}`} className="w-full h-full object-cover" alt={tree.title} />
+  ? <img src={`${import.meta.env.VITE_API_URL}${tree.image}`} className="w-full h-full object-cover" alt={tree.title} />
   : <div className="w-full h-full bg-green-100 flex items-center justify-center text-4xl">🌱</div>
 }
                 {getHealthBadge(tree.health)}

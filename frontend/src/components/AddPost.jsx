@@ -85,10 +85,10 @@ export default function AddPost({ goTo, user }) {
       formData.append("image", photoFile, photoFile.name)
       formData.append("postedBy", user._id)
 
-      const res = await fetch("http://localhost:3000/api/posts", {
-        method: "POST",
-        body: formData
-      })
+     const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts`, {
+  method: "POST",
+  body: formData
+})
 
       const data = await res.json()
       setIsPlanting(false)

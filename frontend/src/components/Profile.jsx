@@ -6,7 +6,7 @@ export default function Profile({ user, goTo, logout }) {
   const [avatar, setAvatar] = useState(null)
 
   useEffect(() => {
-    fetch(`http://localhost:3000/api/posts/user/${user._id}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/posts/user/${user._id}`)
       .then(res => res.json())
       .then(data => setMyTrees(data))
       .catch(() => {})
@@ -41,7 +41,7 @@ export default function Profile({ user, goTo, logout }) {
               {avatar
                 ? <img src={avatar} className="w-full h-full object-cover" alt="avatar" />
                 : user.photo && user.photo !== ""
-                ? <img src={`http://localhost:3000${user.photo}`} className="w-full h-full object-cover" alt="avatar" />
+                ? <img src={`${import.meta.env.VITE_API_URL}${user.photo}`} className="w-full h-full object-cover" alt="avatar" />
                 : <span className="text-4xl">🌿</span>
               }
             </div>
@@ -104,7 +104,7 @@ export default function Profile({ user, goTo, logout }) {
             <div key={tree._id} className="bg-white border border-gray-200 rounded-xl overflow-hidden">
               <div className="h-24 bg-green-100 flex items-center justify-center overflow-hidden">
                 {tree.image && tree.image !== ""
-                  ? <img src={`http://localhost:3000${tree.image}`} className="w-full h-full object-cover" alt={tree.title} />
+                  ? <img src={`${import.meta.env.VITE_API_URL}${tree.image}`} className="w-full h-full object-cover" alt={tree.title} />
                   : <span className="text-3xl">🌱</span>
                 }
               </div>

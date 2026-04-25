@@ -19,7 +19,7 @@ export default function Tree({ user, goTo, openTree }) {
 
   function loadTrees() {
     setLoading(true)
-    fetch(`http://localhost:3000/api/posts?page=${currentPage}&limit=${treesPerPage}`)
+    fetch(`${import.meta.env.VITE_API_URL}/api/posts?page=${currentPage}&limit=${treesPerPage}`)
       .then(res => res.json())
       .then(data => {
         setTreeList(data.posts || [])
@@ -45,7 +45,7 @@ export default function Tree({ user, goTo, openTree }) {
       setTimeout(() => setGuestWarning(false), 3000)
       return
     }
-    const res = await fetch(`http://localhost:3000/api/posts/${treeId}/like`, {
+    const res = await fetch(`${import.meta.env.VITE_API_URL}/api/posts/${treeId}/like`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ userId: user._id })
@@ -128,7 +128,7 @@ export default function Tree({ user, goTo, openTree }) {
         </select>
       </div>
 
-      {/* Loading */}
+      
       {loading && (
         <div className="text-center py-20 text-gray-400">
           <p className="text-4xl mb-3">🌱</p>
@@ -136,7 +136,7 @@ export default function Tree({ user, goTo, openTree }) {
         </div>
       )}
 
-      {/* Empty */}
+     
       {!loading && filteredTrees.length === 0 && (
         <div className="text-center py-20 text-gray-400">
           <p className="text-5xl mb-3">🌱</p>
@@ -149,14 +149,14 @@ export default function Tree({ user, goTo, openTree }) {
         </div>
       )}
 
-      {/* Tree cards */}
+     
       {!loading && filteredTrees.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
           {filteredTrees.map(tree => (
             <div key={tree._id} className="bg-white border border-gray-200 rounded-xl overflow-hidden hover:border-green-300 transition-colors">
               <div className="relative h-40 cursor-pointer" onClick={() => openTree && openTree(tree._id)}>
                 {tree.image
-                  ? <img src={`http://localhost:3000${tree.image}`} className="w-full h-full object-cover" alt={tree.title} />
+                  ? <img  src={`${import.meta.env.VITE_API_URL}${tree.image}`}  className="w-full h-full object-cover" alt={tree.title} />
                   : <div className="w-full h-full bg-green-100 flex items-center justify-center text-4xl">🌱</div>
                 }
                 {getHealthBadge(tree.health)}
@@ -184,7 +184,7 @@ export default function Tree({ user, goTo, openTree }) {
         </div>
       )}
 
-      {/* Pagination */}
+    //pagination
       {totalPages > 1 && (
         <div className="mt-10">
           <div className="flex justify-center items-center gap-1.5 flex-wrap">

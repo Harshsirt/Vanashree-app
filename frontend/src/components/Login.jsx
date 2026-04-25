@@ -20,7 +20,7 @@ export default function Login({ goTo, setUser }) {
     setErrorMsg("")
 
     try {
-      const res = await fetch("http://localhost:3000/api/login", {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
@@ -30,7 +30,7 @@ export default function Login({ goTo, setUser }) {
       const data = await res.json()
       setLoading(false)
       if (data.msg === "Login success") {
-      localStorage.setItem("vanashree_user", JSON.stringify(data.user)) // ✅ add this
+      localStorage.setItem("vanashree_user", JSON.stringify(data.user)) 
       setUser(data.user)
       goTo("home")
       } else {
