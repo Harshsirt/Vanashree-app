@@ -1,0 +1,6 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+.input-style {
+  @apply border border-gray-300 w-full p-2 mb-3 rounded focus:outline-none focus:border-green-700;
+}
