@@ -99,9 +99,7 @@ router.get("/posts/:id", async (req, res) => {
 })
 
 router.post("/posts", upload.single("image"), async (req, res) => {
-   if (!req.user) {
-    return res.status(401).json({ msg: "Login for plant tree" })
-  }
+ 
   const { title, species, location, lat, lng, description, health, postedBy } = req.body
   const imagePath = req.file ? `/uploads/${req.file.filename}` : ""
   const post = new Post({ title, species, location, lat, lng, description, health, image: imagePath, postedBy: postedBy || null })
@@ -110,9 +108,7 @@ router.post("/posts", upload.single("image"), async (req, res) => {
 })
 
 router.post("/posts/:id/like", async (req, res) => {
-  if (!req.user) {
-    return res.status(401).json({ msg: "Login required" })
-  }
+ 
   const { userId } = req.body
   const post = await Post.findById(req.params.id)
   if (!post) return res.json({ msg: "Post not found" })
