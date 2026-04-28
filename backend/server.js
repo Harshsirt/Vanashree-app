@@ -22,7 +22,7 @@ app.use(cors({
   origin: [
     "http://localhost:5173",
     "https://vanashree-frontend.onrender.com",
-    "https://vanashree-app.vercel.app/"
+    "https://vanashree-app.vercel.app"
   ],
   credentials: true
 }))
